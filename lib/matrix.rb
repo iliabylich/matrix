@@ -145,7 +145,7 @@ class Matrix
     return to_enum(__method__, pattern) unless block_given?
 
     each_submatrix_of_size(rows: pattern.rows, cols: pattern.cols) do |row, col, submatrix|
-      yield row, col if submatrix == pattern
+      yield(row:, col:) if submatrix == pattern
     end
   end
 

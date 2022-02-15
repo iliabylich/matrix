@@ -116,8 +116,8 @@ RSpec.describe Matrix do
 
     it 'returns all occurrences of given matrix in the current matrix' do
       expect { |b| matrix.find_exact(pattern, &b) }.to yield_successive_args(
-        [0, 3],
-        [2, 0]
+        { row: 0, col: 3 },
+        { row: 2, col: 0 }
       )
     end
   end
@@ -146,9 +146,9 @@ RSpec.describe Matrix do
 
     it 'returns all occurrences of rotations/mirrors of given matrix in the current matrix' do
       expect { |b| matrix.find_all_possible_occurrences_of(pattern, &b) }.to yield_successive_args(
-        [0, 3],
-        [2, 0],
-        [6, 2]
+        { row: 0, col: 3 },
+        { row: 2, col: 0 },
+        { row: 6, col: 2 }
       )
     end
   end
