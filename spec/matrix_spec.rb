@@ -79,6 +79,23 @@ RSpec.describe Matrix do
   end
 
   describe '#each_submatrix_of_size' do
-    it 'consecutively yields all submatrixes of given size'
+    let(:matrix) do
+      Matrix.parse(<<~MATRIX)
+        123
+        456
+        789
+      MATRIX
+    end
+
+    it 'consecutively yields all submatrixes of given size' do
+      expect(matrix.each_submatrix_of_size(rows: 2, cols: 2).to_a).to eq(
+        [
+          [0, 0, Matrix.parse("12\n45")],
+          [0, 1, Matrix.parse("23\n56")],
+          [1, 0, Matrix.parse("45\n78")],
+          [1, 1, Matrix.parse("56\n89")]
+        ]
+      )
+    end
   end
 end

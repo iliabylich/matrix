@@ -109,4 +109,28 @@ class Matrix
     end
     self.class.new(mirrored)
   end
+
+  # Returns a slice that start at [start_row, start_col] with size [rows, cols]
+  #
+  # @return [Matrix]
+  def slice(start_row:, rows:, start_col:, cols:)
+    self.class.new(
+      @rows[start_row...start_row + rows].map { |row| row[start_col...start_col + cols] }
+    )
+  end
+
+  # Consecutevely yields all submatrixes of given size
+  # (left-to-right top-to-bottom)
+  # together with their offsets (row, col)
+  #
+  # @yield [[Integer, Integer, Matrix]]
+  def each_submatrix_of_size(rows:, cols:)
+    return to_enum(__method__, rows:, cols:) unless block_given?
+
+    0.upto(self.rows - rows) do |start_row|
+      0.upto(self.cols - cols) do |start_col|
+        yield start_row, start_col, slice(start_row:, rows:, start_col:, cols:)
+      end
+    end
+  end
 end
