@@ -97,7 +97,7 @@ RSpec.describe Matrix do
     end
   end
 
-  describe '#find' do
+  describe '#find_exact' do
     let(:matrix) do
       Matrix.parse(<<~MATRIX)
         ---00--
@@ -115,7 +115,7 @@ RSpec.describe Matrix do
     end
 
     it 'returns all occurrences of given matrix in the current matrix' do
-      expect { |b| matrix.find(pattern, &b) }.to yield_successive_args(
+      expect { |b| matrix.find_exact(pattern, &b) }.to yield_successive_args(
         [0, 3],
         [2, 0]
       )
