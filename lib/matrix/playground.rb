@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "playground/version"
+require_relative 'playground/version'
 
 module Matrix
   module Playground
