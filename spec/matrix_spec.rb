@@ -88,13 +88,11 @@ RSpec.describe Matrix do
     end
 
     it 'consecutively yields all submatrixes of given size' do
-      expect(matrix.each_submatrix_of_size(rows: 2, cols: 2).to_a).to eq(
-        [
-          [0, 0, Matrix.parse("12\n45")],
-          [0, 1, Matrix.parse("23\n56")],
-          [1, 0, Matrix.parse("45\n78")],
-          [1, 1, Matrix.parse("56\n89")]
-        ]
+      expect { |b| matrix.each_submatrix_of_size(rows: 2, cols: 2, &b) }.to yield_successive_args(
+        [0, 0, Matrix.parse("12\n45")],
+        [0, 1, Matrix.parse("23\n56")],
+        [1, 0, Matrix.parse("45\n78")],
+        [1, 1, Matrix.parse("56\n89")]
       )
     end
   end
@@ -117,11 +115,9 @@ RSpec.describe Matrix do
     end
 
     it 'returns all occurrences of given matrix in the current matrix' do
-      expect(matrix.find(pattern).to_a).to eq(
-        [
-          [0, 3],
-          [2, 0]
-        ]
+      expect { |b| matrix.find(pattern, &b) }.to yield_successive_args(
+        [0, 3],
+        [2, 0]
       )
     end
   end
