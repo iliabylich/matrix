@@ -30,10 +30,27 @@ RSpec.describe Matrix do
   end
 
   describe '#rotate' do
-    it 'rotates matrix to the left'
+    let(:matrix) do
+      Matrix.parse(<<~MATRIX)
+        100
+        002
+      MATRIX
+    end
+
+    it 'rotates matrix to the left' do
+      expect(matrix.rotate).to eq(Matrix.parse(<<~MATRIX))
+        02
+        00
+        10
+      MATRIX
+    end
 
     context 'when rotated 4 times' do
-      it 'is equal to initial matrix'
+      it 'is equal to initial matrix' do
+        matrix_to_rotate = matrix
+        4.times { matrix_to_rotate = matrix_to_rotate.rotate }
+        expect(matrix_to_rotate).to eq(matrix)
+      end
     end
   end
 

@@ -51,4 +51,43 @@ class Matrix
   def [](row, col)
     @rows[row][col]
   end
+
+  # Consecutively yields all [row, col] pairs for current matrix
+  def each_cell
+    return to_enum(__method__) unless block_given?
+
+    0.upto(rows - 1) do |row|
+      0.upto(cols - 1) do |col|
+        yield row, col
+      end
+    end
+  end
+
+  # Compares +self+ against given matrix.
+  #
+  # +Comparable+ module is not include because other types of comparison are out of scope
+  def ==(other)
+    return false if rows != other.rows || cols != other.cols
+
+    each_cell.all? { |row, col| self[row, col] == other[row, col] }
+  end
+
+  # Rotates matrix to left
+  #
+  # For example, for matrix
+  #
+  # 10
+  # 00
+  #
+  # Returns a new matrix
+  #
+  # 00
+  # 10
+  def rotate
+    rotated = Array.new(cols) { Array.new(rows) { nil } }
+    each_cell do |row, col|
+      rotated[cols - 1 - col][row] = @rows[row][col]
+    end
+    self.class.new(rotated)
+  end
 end
