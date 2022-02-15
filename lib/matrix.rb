@@ -90,4 +90,23 @@ class Matrix
     end
     self.class.new(rotated)
   end
+
+  # Mirrors matrix vertically
+  #
+  # For example, for matrix
+  #
+  # 100
+  # 010
+  #
+  # Returns a new matrix
+  #
+  # 001
+  # 010
+  def mirror
+    mirrored = Array.new(rows) { Array.new(cols) { nil } }
+    each_cell do |row, col|
+      mirrored[row][cols - 1 - col] = @rows[row][col]
+    end
+    self.class.new(mirrored)
+  end
 end

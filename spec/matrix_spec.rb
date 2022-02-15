@@ -55,10 +55,26 @@ RSpec.describe Matrix do
   end
 
   describe '#mirror' do
-    it 'mirros matrix'
+    let(:matrix) do
+      Matrix.parse(<<~MATRIX)
+        --+
+        -+-
+      MATRIX
+    end
+
+    it 'mirrors matrix' do
+      expect(matrix.mirror).to eq(Matrix.parse(<<~MATRIX))
+        +--
+        -+-
+      MATRIX
+    end
 
     context 'when mirrored 2 times' do
-      it 'is equal to initial matrix'
+      it 'is equal to initial matrix' do
+        matrix_to_mirror = matrix
+        2.times { matrix_to_mirror = matrix_to_mirror.mirror }
+        expect(matrix_to_mirror).to eq(matrix)
+      end
     end
   end
 
