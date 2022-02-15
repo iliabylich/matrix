@@ -148,4 +148,27 @@ class Matrix
       yield row, col if submatrix == pattern
     end
   end
+
+  # Returns all occurrences of rotated/mirrored +pattern+ in the current matrix
+  #
+  # @param pattern [Matrix]
+  #
+  # @yield [[Integer, Integer]] pairs of (row, col) offset
+  def find_all_possible_occurrences_of(pattern, &)
+    return to_enum(__method__, pattern) unless block_given?
+
+    variants = [pattern]
+    # 3 rotations
+    3.times.with_object(variants) { |_, previous_variants| previous_variants << previous_variants.last.rotate }
+    # and 1 mirror
+    variants << pattern.mirror
+    # ... there can be more variants, for demonstration I added only mirroring and rotation
+    # ... of course, if they become too complex they probably can be extracted into separated strategies
+    # ... and there can be a registry of known strategies
+    # ... and the method can be parameterized to specify allowed transformations
+
+    variants.each do |variant|
+      find_exact(variant, &)
+    end
+  end
 end

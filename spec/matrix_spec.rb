@@ -121,4 +121,35 @@ RSpec.describe Matrix do
       )
     end
   end
+
+  describe '#find_all_possible_occurrences_of' do
+    let(:matrix) do
+      Matrix.parse(<<~MATRIX)
+        ---12-----
+        ---34-----
+        24--------
+        13--------
+        ^^rotate--
+        ----------
+        --21------
+        --43------
+        --^^mirror
+      MATRIX
+    end
+
+    let(:pattern) do
+      Matrix.parse(<<~MATRIX)
+        12
+        34
+      MATRIX
+    end
+
+    it 'returns all occurrences of rotations/mirrors of given matrix in the current matrix' do
+      expect { |b| matrix.find_all_possible_occurrences_of(pattern, &b) }.to yield_successive_args(
+        [0, 3],
+        [2, 0],
+        [6, 2]
+      )
+    end
+  end
 end
