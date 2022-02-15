@@ -9,12 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: ${{ matrix.suite }}
+    name: ${{ matrix.suite.name }}
     strategy:
       matrix:
         suite:
-          - rspec
-          - rubocop
+          - { name: "rspec tests", command: "rake spec" }
+          - { name: "rubocop",     command: "rubocop" }
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -27,5 +27,5 @@ jobs:
     - name: bundle install
       run: bundle install
 
-    - name: run ${{ matrix.suite }}
-      run: ${{ matrix.suite }}
+    - name: run ${{ matrix.suite.name }}
+      run: ${{ matrix.suite.command }}
