@@ -133,4 +133,19 @@ class Matrix
       end
     end
   end
+
+  # Returns all occurrences of +pattern+ in the current matrix
+  #
+  # @param pattern [Matrix]
+  #
+  # @yield [[Integer, Integer]] pairs of (row, col) offset
+  #
+  # @note Matrix#slice can be used to verify that yielded +row+, +col+ point to current submatrix
+  def find(pattern)
+    return to_enum(__method__, pattern) unless block_given?
+
+    each_submatrix_of_size(rows: pattern.rows, cols: pattern.cols) do |row, col, submatrix|
+      yield row, col if submatrix == pattern
+    end
+  end
 end

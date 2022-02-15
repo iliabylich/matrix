@@ -98,4 +98,31 @@ RSpec.describe Matrix do
       )
     end
   end
+
+  describe '#find' do
+    let(:matrix) do
+      Matrix.parse(<<~MATRIX)
+        ---00--
+        ---00--
+        00-----
+        00-----
+      MATRIX
+    end
+
+    let(:pattern) do
+      Matrix.parse(<<~MATRIX)
+        00
+        00
+      MATRIX
+    end
+
+    it 'returns all occurrences of given matrix in the current matrix' do
+      expect(matrix.find(pattern).to_a).to eq(
+        [
+          [0, 3],
+          [2, 0]
+        ]
+      )
+    end
+  end
 end
