@@ -5,3 +5,8 @@ AllCops:
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+# RSpec describe blocks are supposed to be longer than regular blocks
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
